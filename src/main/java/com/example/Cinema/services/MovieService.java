@@ -34,7 +34,10 @@ public class MovieService {
         movieToUpdate.setRating(movie.getRating());
         movieToUpdate.setDuration(movie.getDuration());
         movieRepository.save(movieToUpdate);
+    }
 
+    public void deleteMovieById(long id) {
+        movieRepository.deleteById(id);
     }
 
 
