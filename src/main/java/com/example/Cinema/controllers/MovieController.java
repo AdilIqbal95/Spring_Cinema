@@ -1,6 +1,7 @@
 package com.example.Cinema.controllers;
 
 
+import com.example.Cinema.models.Message;
 import com.example.Cinema.models.Movie;
 import com.example.Cinema.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,15 @@ public class MovieController {
     @PostMapping
     public ResponseEntity<Movie> addMovie(@RequestBody Movie movie) {
         return new ResponseEntity<>(movieService.addMovie(movie), HttpStatus.CREATED);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Message> updateMovieById(@PathVariable long id,
+                                                   @RequestBody Movie movie) {
+            movieService.updateMovieById(id,movie);
+            Message message = new Message("Movie was updated!");
+            return new ResponseEntity<>(message, HttpStatus.OK);
+
     }
 
 
