@@ -2,33 +2,36 @@ package com.example.Cinema.controllers;
 
 
 import com.example.Cinema.models.Movie;
+import com.example.Cinema.services.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Optional;
+
 @RestController
 @RequestMapping(value = "/movies")
 public class MovieController {
 
+    @Autowired
+    MovieService movieService;
+
 
     @GetMapping
-    public ResponseEntity<String> listOfMovies() {
-        return new ResponseEntity<>("hello", HttpStatus.OK);
+    public ResponseEntity<List<Movie>> listOfMovies() {
+        return new ResponseEntity<>(movieService.getAllMovies(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<String> getMovie(@PathVariable long id) {
-        return new ResponseEntity<>("Single movie", HttpStatus.OK);
+    public ResponseEntity<Optional<Movie>> getMovie(@PathVariable long id) {
+        return new ResponseEntity<>(movieService.getMovieById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Movie> getMovie() {
-        Movie movie = new Movie(
-                "Kingdom of the Planet of the Apes",
-                "PG-13",
-                145);
-        return new ResponseEntity<>(movie, HttpStatus.CREATED);
+    public ResponseEntity<Movie> addMovie(@RequestBody Movie movie) {
+        return new ResponseEntity<>(movieService.addMovie(movie), HttpStatus.CREATED);
     }
 
 
