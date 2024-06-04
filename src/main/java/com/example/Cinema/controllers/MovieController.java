@@ -21,9 +21,9 @@ public class MovieController {
 
 
     @GetMapping
-    public ResponseEntity<List<Movie>> listOfMovies() {
-        return new ResponseEntity<>(movieService.getAllMovies(), HttpStatus.OK);
-    }
+    public ResponseEntity<List<Movie>> listOfMovies(@RequestParam int maxDuration) {
+        return new ResponseEntity<>(movieService.filterByDuration(maxDuration), HttpStatus.OK);
+    } // works with the filter but can't retrieve all movies now
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<Optional<Movie>> getMovie(@PathVariable long id) {
